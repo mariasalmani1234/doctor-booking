@@ -1,10 +1,9 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from rest_framework_simplejwt.views import TokenRefreshView
+
+from accounts.token_views import CustomTokenObtainPairView
 
 
 urlpatterns = [
@@ -26,7 +25,7 @@ urlpatterns = [
 
     path(
         'api/auth/login/',
-        TokenObtainPairView.as_view(),
+        CustomTokenObtainPairView.as_view(),
         name='token_obtain_pair'
     ),
 
