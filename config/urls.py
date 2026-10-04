@@ -39,4 +39,19 @@ urlpatterns = [
         'api/patients/',
         include('patients.urls')
     ),
+
+    path(
+        'api/treatments/',
+        include('treatments.urls')
+    ),
+
+    path(
+        'api/appointments/',
+        include('appointments.urls')
+   ),
+
+   path(
+        'api/appointments/',
+        include('appointments.urls')
+   ),
 ]

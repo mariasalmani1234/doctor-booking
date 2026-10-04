@@ -3,19 +3,26 @@ from rest_framework import serializers
 from .models import Patient
 
 
-class PatientSerializer(serializers.ModelSerializer):
+class PatientSerializer(
+    serializers.ModelSerializer
+):
 
-    national_code = serializers.CharField(
+    userId = serializers.IntegerField(
+        source='user.id',
+        read_only=True
+    )
+
+    nationalCode = serializers.CharField(
         source='user.national_code',
         read_only=True
     )
 
-    first_name = serializers.CharField(
+    firstName = serializers.CharField(
         source='user.first_name',
         read_only=True
     )
 
-    last_name = serializers.CharField(
+    lastName = serializers.CharField(
         source='user.last_name',
         read_only=True
     )
@@ -25,15 +32,32 @@ class PatientSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
+    birthDate = serializers.DateField(
+        source='birth_date',
+        required=False,
+        allow_null=True
+    )
+
     class Meta:
+
         model = Patient
 
         fields = [
             'id',
-            'national_code',
-            'first_name',
-            'last_name',
+            'userId',
+            'nationalCode',
+            'firstName',
+            'lastName',
             'phone',
-            'birth_date',
+            'birthDate',
             'address',
+        ]
+
+        read_only_fields = [
+            'id',
+            'userId',
+            'nationalCode',
+            'firstName',
+            'lastName',
+            'phone',
         ]

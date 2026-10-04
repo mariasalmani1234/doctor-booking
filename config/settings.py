@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-)c*v$80ejjr+x!d5+b%!(o4&+qk%bu_hm^p0@sx*j!agd7to69
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+]
 
 
 # Application definition
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
     'doctors',
     'appointments',
     'patients',
+    'treatments',
 
 ]
 
@@ -64,6 +68,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
+    'http://127.0.0.1:4200',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -144,12 +149,31 @@ MAILERS = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
+
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
         'rest_framework.authentication.SessionAuthentication',
+
     ],
-        'DEFAULT_PERMISSION_CLASSES': [
+
+    'DEFAULT_PERMISSION_CLASSES': [
+
         'rest_framework.permissions.AllowAny',
+
     ],
+
 }
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 AUTH_USER_MODEL = 'accounts.User'
